@@ -18,6 +18,7 @@ pipeline {
         GOOGLE_CLIENT_SECRET=credentials("GOOGLE_CLIENT_SECRET")
         DOMAIN_PRODUCTION=credentials("DOMAIN_PRODUCTION")
         DOMAIN_STAGING=credentials("DOMAIN_STAGING")
+        DOMAIN_SANDBOX=credentials("DOMAIN_SANDBOX")
         PROJECT_ID=credentials("PROJECT_ID")
         SERVICE_KEY=credentials("SERVICE_KEY")
         SERVICE_ACCOUNT_EMAIL=credentials("SERVICE_ACCOUNT_EMAIL")
@@ -29,9 +30,9 @@ pipeline {
         USER_MICROSERVICE_API_URL=credentials("USER_MICROSERVICE_API_URL")
         USER_MICROSERVICE_API_TOKEN=credentials("USER_MICROSERVICE_API_TOKEN")
         STAGING_RESERVED_IP=credentials("STAGING_RESERVED_IP")
+        SANDBOX_RESERVED_IP=credentials("SANDBOX_RESERVED_IP")
         PRODUCTION_RESERVED_IP=credentials("PRODUCTION_RESERVED_IP")
         PRODUCTION_BUGSNAG_KEY=credentials("PRODUCTION_BUGSNAG_KEY")
-        SANDBOX_RESERVED_IP=credentials("SANDBOX_RESERVED_IP")
         PRIVATE_KEY=credentials("PRIVATE_KEY")
     }
     stages {
@@ -40,8 +41,7 @@ pipeline {
                 sh 'chmod 777 ./jenkins_ci/jenkins_scripts/pg-setup.sh'
                 sh './jenkins_ci/jenkins_scripts/pg-setup.sh'
                 sh 'sudo chmod -R 777 /usr/local && bundle install'
-                sh "bundle exec rake db:create"
-                sh "bundle exec rake db:schema:load"
+                sh "bundle exec rails db:setup"
                 sh "bundle exec rake db:migrate"
             }
         }
