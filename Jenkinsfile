@@ -43,7 +43,7 @@ pipeline {
                 sh 'sudo gpasswd -a jenkins docker'
                 sh 'sudo chmod 777 /var/run/docker.sock'
                 sh 'docker images'
-                sh 'docker system prune -a -y'
+                sh 'docker system prune -f'
             }
         }
         stage('Build') {
