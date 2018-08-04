@@ -43,7 +43,7 @@ pipeline {
                 sh 'sudo gpasswd -a jenkins docker'
                 sh 'sudo chmod 777 /var/run/docker.sock'
                 sh 'docker images'
-                sh '/usr/bin/docker images --quiet --filter=dangling=true | xargs --no-run-if-empty docker rmi'
+                sh '/usr/bin/docker images --quiet --filter=dangling=true | xargs --no-run-if-empty docker rmi 2>/dev/null'
             }
         }
         stage('Build') {
